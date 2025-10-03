@@ -6,42 +6,77 @@
 <title>𝑺𝒂𝒉𝒂𝒓</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
+
   body {
     margin: 0;
     padding: 0;
     font-family: 'Vazirmatn', sans-serif;
-    background: radial-gradient(circle at center, #1a1a1a, #000);
+    background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #000);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
     color: #fff;
     text-align: center;
     overflow-x: hidden;
   }
+
+  @keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+  }
+
   h1 {
     font-size: 3rem;
-    margin-top: 50px;
-    animation: fadeIn 3s ease-in-out forwards;
+    margin-top: 60px;
+    color: #ff4fa3;
+    text-shadow: 0 0 15px #ff4fa3, 0 0 30px #ff006e;
+    overflow: hidden;
+    border-right: .15em solid #fff;
+    white-space: nowrap;
+    margin: 0 auto;
+    animation: typing 3s steps(20, end), blink .75s step-end infinite;
+    width: fit-content;
   }
-  @keyframes fadeIn {
-    0% {opacity: 0; transform: translateY(-20px);}
-    100% {opacity: 1; transform: translateY(0);}
+
+  @keyframes typing {
+    from {width: 0}
+    to {width: 100%}
   }
+
+  @keyframes blink {
+    from, to {border-color: transparent}
+    50% {border-color: #fff;}
+  }
+
   .message {
-    max-width: 600px;
-    margin: 20px auto;
+    max-width: 650px;
+    margin: 40px auto;
     line-height: 2;
     font-size: 1.2rem;
-    white-space: pre-line;
     opacity: 0;
-    animation: fadeInText 4s ease forwards;
-    animation-delay: 3s;
+    transform: translateY(20px);
+    animation: fadeInUp 3s ease forwards;
+    animation-delay: 4s;
+    white-space: pre-line;
   }
-  @keyframes fadeInText {
+
+  @keyframes fadeInUp {
+    to {opacity: 1; transform: translateY(0);}
+  }
+
+  .footer {
+    margin-top: 50px;
+    font-size: 1rem;
+    opacity: 0;
+    animation: fadeIn 3s ease forwards;
+    animation-delay: 9s;
+    color: #ffb6f0;
+  }
+
+  @keyframes fadeIn {
     to {opacity: 1;}
   }
-  .footer {
-    margin-top: 40px;
-    font-size: 1rem;
-    opacity: 0.8;
-  }
+
   .hearts {
     position: fixed;
     width: 100%;
@@ -55,10 +90,10 @@
     position: absolute;
     width: 20px;
     height: 20px;
-    background: red;
-    opacity: 0.6;
+    background: #ff004f;
+    opacity: 0.7;
     transform: rotate(45deg);
-    animation: float 6s infinite;
+    animation: float 6s linear infinite;
   }
   .heart:before,
   .heart:after {
@@ -66,7 +101,7 @@
     position: absolute;
     width: 20px;
     height: 20px;
-    background: red;
+    background: #ff004f;
     border-radius: 50%;
   }
   .heart:before {
@@ -81,15 +116,22 @@
     0% {transform: translateY(100vh) rotate(45deg);}
     100% {transform: translateY(-10vh) rotate(45deg);}
   }
+
   button {
     background: #ff004f;
     color: #fff;
     border: none;
-    padding: 10px 20px;
-    margin-top: 20px;
-    border-radius: 20px;
-    font-size: 1rem;
+    padding: 12px 25px;
+    margin-top: 30px;
+    border-radius: 50px;
+    font-size: 1.1rem;
     cursor: pointer;
+    box-shadow: 0 0 20px rgba(255,0,79,0.7);
+    transition: 0.3s;
+  }
+  button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 35px rgba(255,0,79,1);
   }
 </style>
 </head>
