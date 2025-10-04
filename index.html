@@ -11,15 +11,22 @@
     margin: 0;
     padding: 0;
     font-family: 'Vazirmatn', sans-serif;
-    background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #000);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
+    background: linear-gradient(135deg, 
+      rgba(255, 0, 128, 0.6), 
+      rgba(255, 165, 0, 0.6), 
+      rgba(255, 255, 0, 0.6), 
+      rgba(0, 255, 128, 0.6), 
+      rgba(0, 200, 255, 0.6), 
+      rgba(128, 0, 255, 0.6), 
+      rgba(255, 0, 255, 0.6));
+    background-size: 1400% 1400%;
+    animation: rainbowBG 30s ease infinite;
     color: #fff;
     text-align: center;
     overflow-x: hidden;
   }
 
-  @keyframes gradientBG {
+  @keyframes rainbowBG {
     0% {background-position: 0% 50%;}
     50% {background-position: 100% 50%;}
     100% {background-position: 0% 50%;}
@@ -28,8 +35,8 @@
   h1 {
     font-size: 3rem;
     margin-top: 60px;
-    color: #ff4fa3;
-    text-shadow: 0 0 15px #ff4fa3, 0 0 30px #ff006e;
+    color: #fff;
+    text-shadow: 0 0 15px #fff, 0 0 30px #ff00a2;
     overflow: hidden;
     border-right: .15em solid #fff;
     white-space: nowrap;
@@ -58,6 +65,10 @@
     animation: fadeInUp 3s ease forwards;
     animation-delay: 4s;
     white-space: pre-line;
+    backdrop-filter: blur(8px);
+    background: rgba(0,0,0,0.25);
+    padding: 15px;
+    border-radius: 15px;
   }
 
   @keyframes fadeInUp {
@@ -70,13 +81,15 @@
     opacity: 0;
     animation: fadeIn 3s ease forwards;
     animation-delay: 9s;
-    color: #ffb6f0;
+    color: #fff;
+    text-shadow: 0 0 10px #fff;
   }
 
   @keyframes fadeIn {
     to {opacity: 1;}
   }
 
+  /* قلب‌ها */
   .hearts {
     position: fixed;
     width: 100%;
@@ -90,10 +103,11 @@
     position: absolute;
     width: 20px;
     height: 20px;
-    background: #ff004f;
-    opacity: 0.7;
+    background: #fff;
+    opacity: 0.8;
     transform: rotate(45deg);
     animation: float 6s linear infinite;
+    box-shadow: 0 0 10px #fff, 0 0 20px #fff;
   }
   .heart:before,
   .heart:after {
@@ -101,8 +115,9 @@
     position: absolute;
     width: 20px;
     height: 20px;
-    background: #ff004f;
+    background: #fff;
     border-radius: 50%;
+    box-shadow: 0 0 10px #fff, 0 0 20px #fff;
   }
   .heart:before {
     top: -10px;
@@ -117,30 +132,74 @@
     100% {transform: translateY(-10vh) rotate(45deg);}
   }
 
+  /* دکمه‌ها */
   button {
-    background: #ff004f;
+    background: rgba(255,255,255,0.2);
     color: #fff;
-    border: none;
+    border: 1px solid rgba(255,255,255,0.5);
     padding: 12px 25px;
-    margin-top: 30px;
+    margin: 15px;
     border-radius: 50px;
     font-size: 1.1rem;
     cursor: pointer;
-    box-shadow: 0 0 20px rgba(255,0,79,0.7);
+    backdrop-filter: blur(6px);
     transition: 0.3s;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeInUp 1.5s ease forwards;
   }
   button:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 35px rgba(255,0,79,1);
+    background: rgba(255,255,255,0.35);
+  }
+
+  /* دکمه پالس */
+  .pulse {
+    background: rgba(255, 192, 203, 0.3);
+    border: 2px solid #fff;
+    font-size: 1.2rem;
+    animation: pulse 1.5s infinite, fadeInUp 2s ease forwards;
+    animation-delay: 1s;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.7); transform: scale(1); }
+    50% { box-shadow: 0 0 20px 10px rgba(255,255,255,0.3); transform: scale(1.08); }
+    100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.7); transform: scale(1); }
   }
 </style>
 </head>
 <body>
 
-<h1>𝑩𝒂𝒓𝒂𝒚𝒆 𝑺𝒂𝒉𝒂𝒓 ❤️</h1>
+<h1>𝑩𝒂𝒓𝒂𝒚𝒆 𝑺𝒂𝒉𝒂𝒓❤️</h1>
+<audio id="music"></audio>
 
-<audio id="music" src="https://dl.rozmusic.com/Music/1404/07/11/Haamim%20-%20Taghsire%20Toe.mp3"></audio>
-<button onclick="document.getElementById('music').play()">🎶 پخش موزیک</button>
+<button onclick="playPlaylist()">🎶 پخش موزیک</button>
+
+<script>
+  const songs = [
+    "https://dl.sevilmusics.com/cdn/music/srvri/Novan%20-%20Mosaken%20[SevilMusic].mp3",
+    "https://goodmusic.musitraf.com/lori/saeed_mohammadi_zolfe_yar.mp3",
+    "https://goodmusic.musitraf.com/lori/mohammadreza-nazari-yadoone-nazeli.mp3"
+  ];
+
+  let current = 0;
+  const player = document.getElementById("music");
+
+  function playPlaylist() {
+    player.src = songs[current];
+    player.play();
+
+    // وقتی آهنگ تموم شد، بره آهنگ بعدی
+    player.onended = () => {
+      current = (current + 1) % songs.length; // برمی‌گرده به اول بعد از آخرین آهنگ
+      player.src = songs[current];
+      player.play();
+    };
+  }
+</script>
+<!-- دکمه پالس‌دار -->
+<button class="pulse" onclick="window.location.href='https://love-uit7.onrender.com'">🌸 اینو بزن 🌸</button>
 
 <div class="message">
 همه کار کردم تا بهت بفهمونم عاشقتم  
